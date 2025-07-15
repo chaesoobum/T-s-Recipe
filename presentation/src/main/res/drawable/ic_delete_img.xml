@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="20dp"
+    android:height="20dp"
+    android:viewportWidth="20"
+    android:viewportHeight="20">
+
+    <!-- 배경 원형 -->
+    <path
+        android:fillColor="#161D24"
+        android:pathData="M0,10a10,10 0 1,0 20,0a10,10 0 1,0 -20,0" />
+
+    <!-- 대각선: 오른쪽 위 -> 왼쪽 아래 -->
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:strokeWidth="1"
+        android:fillColor="@android:color/transparent"
+        android:pathData="M14,6 L6,14" />
+
+    <!-- 대각선: 왼쪽 위 -> 오른쪽 아래 -->
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:strokeWidth="1"
+        android:fillColor="@android:color/transparent"
+        android:pathData="M6,6 L14,14" />
+</vector>
