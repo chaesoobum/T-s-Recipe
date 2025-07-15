@@ -30,7 +30,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.csb.presentation.R
 import com.csb.presentation.component.SubComposeAsyncImage
-import com.csb.presentation.recipe.sharedviewmodel.RecipeSharedViewModel
 import com.csb.presentation.util.RootScreen
 
 
@@ -44,23 +43,23 @@ fun RecipeItem(
     time: String,
     name: String
 ) {
-    val context = LocalContext.current
-    val activity = context as ComponentActivity
-    val recipeSharedViewModel: RecipeSharedViewModel = hiltViewModel(activity)
+//    val context = LocalContext.current
+//    val activity = context as ComponentActivity
+//    val recipeSharedViewModel: RecipeSharedViewModel = hiltViewModel(activity)
 
     Column(
         modifier = Modifier
             .wrapContentHeight()
             .fillMaxWidth()
             .clickable {
-                recipeSharedViewModel.setRecipeData(
-                    imageUrl = imageUrl,
-                    title = title,
-                    serving = serving,
-                    price = price,
-                    time = time,
-                    name = name
-                )
+//                recipeSharedViewModel.setRecipeData(
+//                    imageUrl = imageUrl,
+//                    title = title,
+//                    portion = serving,
+//                    price = price,
+//                    time = time,
+//                    name = name
+//                )
                 routeScreenNavController.navigate(RootScreen.SCREEN_RECIPE.name)
             }
     ) {

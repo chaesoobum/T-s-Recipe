@@ -1,11 +1,10 @@
-package com.csb.presentation.recipe.sharedviewmodel
+package com.csb.domain.model
 
-data class RecipeSharedDataClass(
+data class HomeRecipeItem(
     val imageUrl: String = "",
     val title: String = "",
-    val serving: String = "",
+    val portion: String = "",
     val price: String = "",
     val time: String = "",
     val name: String = ""
-
-    )
+)

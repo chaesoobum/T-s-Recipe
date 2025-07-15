@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -16,8 +17,23 @@ import androidx.navigation.NavHostController
 fun HomeScreen(
     rootScreenNavController: NavHostController,
     viewModel: HomeViewModel
-) {
-    if (viewModel.isHomeScreenShow.value == true){
+){
+    LaunchedEffect(Unit) {
+        viewModel.fetchHomeScreen()
+    }
+
+    HomeContent(
+        rootScreenNavController,
+        viewModel
+    )
+}
+
+@Composable
+fun HomeContent(
+    rootScreenNavController: NavHostController,
+    viewModel: HomeViewModel
+){
+    if (!viewModel.isHomeScreenShow.value){
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -30,17 +46,8 @@ fun HomeScreen(
                 verticalArrangement = Arrangement.spacedBy(13.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-
-                items(viewModel.temp) { item ->
-                    RecipeItem(
-                        rootScreenNavController,
-                        imageUrl = item[0],
-                        title = item[1],
-                        serving = item[2],
-                        price = item[3],
-                        time = item[4],
-                        name = item[5]
-                    )
+                items(count = 8) {
+                    RecipeItemShimmer()
                 }
             }
         }
@@ -58,13 +65,20 @@ fun HomeScreen(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
 
-                items(viewModel.tempTemp) { item ->
-                    RecipeItemShimmer()
+                items(viewModel.homeScreenData) { item ->
+                    RecipeItem(
+                        rootScreenNavController,
+                        imageUrl = item.imageUrl,
+                        title = item.title,
+                        serving = item.portion,
+                        price = item.price,
+                        time = item.time,
+                        name = item.name
+                    )
                 }
             }
         }
     }
-
 
 }
 

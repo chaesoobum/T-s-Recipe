@@ -23,13 +23,5 @@ sealed class MainScreen(val root: String, val label: String, val icon: Int) {
     object UploadRecipe : MainScreen("uploadRecipe", "레시피 업로드", R.drawable.ic_addrecipe)
     object MyPage : MainScreen("myPage", "마이 페이지", R.drawable.ic_mypage)
 }
-enum class UnitType(val label: String) {
-    TBSP("Tbsp"),
-    CUP("Cup"),
-    G("g"),
-    ML("ml"),
-    OZ("oz"),
-    QTY("개수")
-}
 
 

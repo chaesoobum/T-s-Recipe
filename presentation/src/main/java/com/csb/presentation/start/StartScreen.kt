@@ -33,7 +33,7 @@ import com.csb.presentation.component.TopAppBar
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StartScreen(
-    navController: NavController
+    rootScreenNavController: NavController
 ) {
     Scaffold(
         modifier = Modifier
@@ -90,7 +90,7 @@ fun StartScreen(
                             .padding(start = 15.dp, end = 15.dp),
                         text = stringResource(id = R.string.logIn),
                         onClick = {
-                            navController.navigate(RootScreen.SCREEN_LOGIN.name)
+                            rootScreenNavController.navigate(RootScreen.SCREEN_LOGIN.name)
                         },
                         buttonColor = colorResource(id = R.color.textColor262626),
                         borderColor = colorResource(id = R.color.textColor262626),
@@ -103,7 +103,7 @@ fun StartScreen(
                             .padding(start = 15.dp, end = 15.dp),
                         text = stringResource(id = R.string.signUpForFree),
                         onClick = {
-                            navController.navigate(RootScreen.SCREEN_SIGNUP.name)
+                            rootScreenNavController.navigate(RootScreen.SCREEN_SIGNUP.name)
                         },
                         buttonColor = Color.Transparent,
                         borderColor = colorResource(id = R.color.colorD9D9D9),

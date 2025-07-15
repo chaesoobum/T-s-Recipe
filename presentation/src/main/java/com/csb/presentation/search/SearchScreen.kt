@@ -28,7 +28,7 @@ import com.csb.presentation.R
 
 @Composable
 fun SearchScreen(
-    routeScreenNavController: NavHostController,
+    rootScreenNavController: NavHostController,
     searchViewModel: SearchViewModel
 ) {
     val context = LocalContext.current

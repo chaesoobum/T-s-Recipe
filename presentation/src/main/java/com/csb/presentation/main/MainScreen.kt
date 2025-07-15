@@ -29,7 +29,6 @@ import com.csb.presentation.util.MainScreen
 fun MainScreen(rootScreenNavController: NavHostController) {
     val mainScreenNavController = rememberNavController()
     val currentBackStack by mainScreenNavController.currentBackStackEntryAsState()
-    val currentRoute = currentBackStack?.destination?.route
 
     // 각 탭에 사용하는 뷰모델 선언
     val homeViewModel: HomeViewModel = hiltViewModel()
@@ -41,7 +40,7 @@ fun MainScreen(rootScreenNavController: NavHostController) {
         bottomBar = {
             BottomNavigationBar(
                 mainNavController = mainScreenNavController,
-                routeScreenNavController = rootScreenNavController
+                rootScreenNavController = rootScreenNavController
             )
         }
     ) { innerPadding ->

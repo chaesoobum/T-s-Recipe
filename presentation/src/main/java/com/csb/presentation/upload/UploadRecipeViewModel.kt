@@ -12,6 +12,47 @@ import javax.inject.Inject
 @HiltViewModel
 class UploadRecipeViewModel
 @Inject constructor() : ViewModel() {
+    // 대표 이미지 URI
+    private val _mainImageUri = mutableStateOf(Uri.EMPTY)
+    val mainImageUri: State<Uri> get() = _mainImageUri
+    fun setMainImageUri(uri: Uri? = Uri.EMPTY) {
+        _mainImageUri.value = uri
+    }
+
+    // 바텀시트 상태
+    private val _showBottomSheet = mutableStateOf(false)
+    val showBottomSheet: State<Boolean> get() = _showBottomSheet
+    fun setShowBottomSheetVisible(isShowing: Boolean) {
+        _showBottomSheet.value = isShowing
+    }
+
+    // 사진 삭제 다이얼로그
+    private val _deletePictureDialog = mutableStateOf(false)
+    val deletePictureDialog: State<Boolean> get() = _deletePictureDialog
+    fun setDeletePictureDialog(visible: Boolean) {
+        _deletePictureDialog.value = visible
+    }
+
+    //레시피 제목(1자 ~20자)
+    private var _recipeTitle = mutableStateOf("")
+    val recipeTitle:State<String> get() = _recipeTitle
+
+    //레시피 분량(숫자)(숫자만 입력받게)
+    private var _recipePortion = mutableStateOf<Int?>(null)
+    val recipePortion:State<Int?> get() = _recipePortion
+
+    //레시피 비용(숫자)(숫자만 입력받게)
+    private var _recipePrice = mutableStateOf<Int?>(null)
+    val recipePrice:State<Int?>get() = _recipePrice
+
+    //레시피 소요시간(숫자)(숫자만 입력받게)(분)
+    private var _recipeTime = mutableStateOf<Int?>(null)
+    val recipeTime:State<Int?>get() = _recipeTime
+
+    //기타메모(스트링)(1자~100자)
+    private var _recipeMemo = mutableStateOf("")
+    var recipeMemo:State<String> = _recipeMemo
+
 
     // 재료 초과 다이얼로그
     private val _ingredientDialog = mutableStateOf(false)
@@ -43,6 +84,13 @@ class UploadRecipeViewModel
         _ingredientTable.remove(item)
     }
 
+    // 소스 초과 다이얼로그
+    private val _sourceDialog = mutableStateOf(false)
+    val sourceDialog: State<Boolean> get() = _sourceDialog
+    fun setSourceDialog(visible: Boolean) {
+        _sourceDialog.value = visible
+    }
+
     // 소스 테이블
     private val _sourceTable = mutableStateListOf(IngredientInputBoxState())
     val sourceTable: List<IngredientInputBoxState> get() = _sourceTable
@@ -52,7 +100,7 @@ class UploadRecipeViewModel
         if (_sourceTable.size < 50) {
             _sourceTable.add(IngredientInputBoxState())
         } else {
-            setIngredientDialog(true)
+            setSourceDialog(true)
         }
     }
     //소스 이동
@@ -90,26 +138,5 @@ class UploadRecipeViewModel
     //과정추가
     fun addProcedure(stepIndex: Int) {
         _stepList.value[stepIndex].procedureList.add(ProcedureInputBoxState())
-    }
-
-    // 대표 이미지 URI
-    private val _mainImageUri = mutableStateOf(Uri.EMPTY)
-    val mainImageUri: State<Uri> get() = _mainImageUri
-    fun setMainImageUri(uri: Uri? = Uri.EMPTY) {
-        _mainImageUri.value = uri
-    }
-
-    // 바텀시트 상태
-    private val _showBottomSheet = mutableStateOf(false)
-    val showBottomSheet: State<Boolean> get() = _showBottomSheet
-    fun setShowBottomSheetVisible(isShowing: Boolean) {
-        _showBottomSheet.value = isShowing
-    }
-
-    // 사진 삭제 다이얼로그
-    private val _deletePictureDialog = mutableStateOf(false)
-    val deletePictureDialog: State<Boolean> get() = _deletePictureDialog
-    fun setDeletePictureDialog(visible: Boolean) {
-        _deletePictureDialog.value = visible
     }
 }

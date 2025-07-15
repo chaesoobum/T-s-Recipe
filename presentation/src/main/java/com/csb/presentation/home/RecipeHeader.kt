@@ -1,10 +1,12 @@
 package com.csb.presentation.home
 
 import android.widget.Scroller
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Text
@@ -13,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -24,7 +27,7 @@ import com.csb.presentation.component.SubComposeAsyncImage
 
 @Composable
 fun RecipeHeader(
-    imageUrl: String,
+    imageUrl: String?,
     title: String,
     serving: String,
     price: String,
@@ -38,12 +41,21 @@ fun RecipeHeader(
             .height(350.dp)
             .background(Color.Transparent)
     ) {
-        SubComposeAsyncImage(
-            //imgUrl = recipe.imageUrl,
-            imgUrl = imageUrl,
-            contentDescription = "레시피 이미지",
-            contentScale = ContentScale.Crop,
-        )
+        if (imageUrl.isNullOrEmpty()) {
+            Image(
+                modifier = Modifier
+                    .fillMaxSize(),
+                painter = painterResource(id = R.drawable.no_image),
+                contentDescription = "기본 레시피 이미지",
+                contentScale = ContentScale.Crop
+            )
+        } else {
+            SubComposeAsyncImage(
+                imgUrl = imageUrl,
+                contentDescription = "레시피 이미지",
+                contentScale = ContentScale.Crop,
+            )
+        }
     }
     Spacer(modifier = Modifier.height(10.dp))
     Text(

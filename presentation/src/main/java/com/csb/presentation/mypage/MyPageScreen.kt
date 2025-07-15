@@ -9,7 +9,7 @@ import androidx.navigation.NavHostController
 
 @Composable
 fun MyPageScreen(
-    routeScreenNavController: NavHostController,
+    rootScreenNavController: NavHostController,
     myPageViewModel: MyPageViewModel
 ) {
     Column (

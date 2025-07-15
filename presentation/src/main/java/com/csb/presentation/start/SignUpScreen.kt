@@ -45,7 +45,7 @@ import com.csb.presentation.util.RootScreen
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SignUpScreen(
-    navController: NavHostController
+    rootScreenNavController: NavHostController
 ) {
     val context = LocalContext.current
     val focusManager = LocalFocusManager.current
@@ -63,7 +63,7 @@ fun SignUpScreen(
                 isDivider = false,
                 navigationIconImage = ImageVector.vectorResource(id = R.drawable.ic_arrow_back),
                 navigationIconOnClick = {
-                    navController.popBackStack()
+                    rootScreenNavController.popBackStack()
                 }
             )
         }
@@ -178,8 +178,8 @@ fun SignUpScreen(
                     Text(
                         modifier = Modifier
                             .clickable{
-                                navController.popBackStack()
-                                navController.navigate(RootScreen.SCREEN_LOGIN.name)
+                                rootScreenNavController.popBackStack()
+                                rootScreenNavController.navigate(RootScreen.SCREEN_LOGIN.name)
                             },
                         textAlign = TextAlign.Start,
                         text = stringResource(id = R.string.logIn),

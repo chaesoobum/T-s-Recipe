@@ -18,6 +18,7 @@ import com.csb.presentation.upload.UploadRecipeScreen
 import com.csb.presentation.upload.UploadRecipeViewModel
 import com.csb.presentation.util.RootScreen
 
+//기본 뿌리 스크린
 @Composable
 fun RootScreen() {
     val rootScreenNavController = rememberNavController()
@@ -72,19 +73,19 @@ fun RootScreen() {
         composable(
             route = RootScreen.SCREEN_START.name
         ) {
-            StartScreen(navController = rootScreenNavController)
+            StartScreen(rootScreenNavController)
 
         }
         composable(
             route = RootScreen.SCREEN_LOGIN.name
         ) {
-            LoginScreen(navController = rootScreenNavController)
+            LoginScreen(rootScreenNavController)
 
         }
         composable(
             route = RootScreen.SCREEN_SIGNUP.name
         ) {
-            SignUpScreen(navController = rootScreenNavController)
+            SignUpScreen(rootScreenNavController)
 
         }
     }

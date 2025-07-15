@@ -76,7 +76,7 @@ import kotlin.collections.forEachIndexed
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UploadRecipeScreen(
-    routeScreenNavController: NavHostController,
+    rootScreenNavController: NavHostController,
     viewModel: UploadRecipeViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
@@ -169,6 +169,21 @@ fun UploadRecipeScreen(
         )
     }
 
+    // 소스초과(50+) 다이얼로그
+    if (viewModel.sourceDialog.value) {
+        CustomDialog(
+            message = stringResource(id = R.string.noMoreMaterialsCanBeAdded),
+            onConfirm = {
+                viewModel.setSourceDialog(false)
+            },
+            onDismiss = {
+                viewModel.setSourceDialog(false)
+            },
+            showDialog = viewModel.sourceDialog.value,
+            onDismissRequest = { viewModel.setSourceDialog(false) }
+        )
+    }
+
 
     Scaffold(
         modifier = Modifier
@@ -185,7 +200,7 @@ fun UploadRecipeScreen(
                 isDivider = true,
                 navigationIconImage = ImageVector.vectorResource(id = R.drawable.close_24px),
                 navigationIconOnClick = {
-                    routeScreenNavController.popBackStack()
+                    rootScreenNavController.popBackStack()
                 },
                 menuItems = {
                     if (!false) {

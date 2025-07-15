@@ -5,74 +5,32 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.csb.domain.model.HomeRecipeItem
+import com.csb.domain.repositories.HomeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-
+    private var homeRepository: HomeRepository
 ) : ViewModel() {
-    val temp = mutableStateListOf<List<String>>()
-    val tempTemp = mutableStateListOf<List<String>>()
 
-    private var _isHomeScreenShow = mutableStateOf<Boolean>(false)
-    var isHomeScreenShow:State<Boolean> = _isHomeScreenShow
+    //홈 스크린 구성을 위한 레시피 아이템
+    private val _homeScreenData = mutableStateListOf<HomeRecipeItem>()
+    val homeScreenData: List<HomeRecipeItem> get() = _homeScreenData
 
-    val one = listOf<String>(
-        "https://raw.githubusercontent.com/realbeginnerr/tsrecipe/main/assets/img/r07_broccoliseasonedtofu.jpg",
-        "브로콜리 두부 무침",
-        "3",
-        "4,000",
-        "15",
-        "홍길동")
-    val two = listOf<String>(
-        "https://raw.githubusercontent.com/realbeginnerr/tsrecipe/main/assets/img/r06_chickenteriyaki.jpg",
-        "닭다리살 데리야끼",
-        "3",
-        "4,000",
-        "15",
-        "홍길동")
-    val three = listOf<String>(
-        "https://raw.githubusercontent.com/realbeginnerr/tsrecipe/main/assets/img/r04_jeyukbokkeum.jpg",
-        "제육볶음",
-        "3",
-        "4,000",
-        "15",
-        "홍길동")
+    //화면구성전 더미데이터를 보여주는 시간
+    private var _isHomeScreenShow = mutableStateOf(false)
+    val isHomeScreenShow: State<Boolean> = _isHomeScreenShow
 
-    fun fetchHomeScreen(){
+    fun fetchHomeScreen() {
         viewModelScope.launch {
-            temp.add(one)
-            temp.add(two)
-            temp.add(three)
-            temp.add(one)
-            temp.add(two)
-            temp.add(three)
-            temp.add(one)
-            temp.add(two)
-            temp.add(three)
-            temp.add(one)
-            temp.add(two)
-            temp.add(three)
-            tempTemp.add(two)
-            tempTemp.add(three)
-            tempTemp.add(one)
-            tempTemp.add(two)
-            tempTemp.add(three)
-            tempTemp.add(one)
-            tempTemp.add(two)
-            tempTemp.add(three)
-
-            delay(1000)
-
-            _isHomeScreenShow.value = true
+            if (!_isHomeScreenShow.value) {
+                val result = homeRepository.fetchHomeScreen()
+                _homeScreenData.addAll(result)
+                _isHomeScreenShow.value = true
+            }
         }
-    }
-
-    //화면구성
-    init {
-        fetchHomeScreen()
     }
 }

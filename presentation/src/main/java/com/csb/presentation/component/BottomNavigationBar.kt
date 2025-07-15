@@ -30,7 +30,7 @@ import com.csb.presentation.util.RootScreen
 @Composable
 fun BottomNavigationBar(
     mainNavController: NavHostController,
-    routeScreenNavController: NavHostController
+    rootScreenNavController: NavHostController
 ) {
     val screens = listOf(
         MainScreen.Home,
@@ -55,7 +55,7 @@ fun BottomNavigationBar(
                     NavigationBarItem(
                         selected = false,
                         onClick = {
-                            routeScreenNavController.navigate(RootScreen.SCREEN_UPLOAD_RECIPE.name)
+                            rootScreenNavController.navigate(RootScreen.SCREEN_UPLOAD_RECIPE.name)
                         },
                         icon = {
                             Icon(
