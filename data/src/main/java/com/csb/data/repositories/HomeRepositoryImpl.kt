@@ -32,7 +32,7 @@ class HomeRepositoryImpl @Inject constructor() : HomeRepository {
             "홍길동"
         )
 
-        delay(2000)
+        delay(1000)
 
         val result = listOf(
             recipeSharedDataClass1,

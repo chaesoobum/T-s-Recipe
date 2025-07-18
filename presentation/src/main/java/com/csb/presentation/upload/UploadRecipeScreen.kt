@@ -17,19 +17,13 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Checkbox
-import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -37,8 +31,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -63,15 +55,15 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.csb.presentation.R
 import com.csb.presentation.component.CustomBoxOutlineButton
-import com.csb.presentation.component.GetPhotoButton
-import com.csb.presentation.component.SimpleOutlinedTextField
 import com.csb.presentation.component.TakePictureOptionBottomSheet
 import com.csb.presentation.component.TopAppBar
 import com.csb.presentation.component.dialog.CustomDialog
-import com.csb.presentation.component.photo.PhotoItem
-import com.csb.presentation.upload.ingredientBox.IngredientInputTable
+import com.csb.presentation.component.dialog.CustomProgressDialog
+import com.csb.presentation.upload.headerBox.UploadRecipeHeader
+import com.csb.presentation.upload.ingredientBox.IngredientsList
+import com.csb.presentation.upload.ingredientBox.SourcesList
 import com.csb.presentation.upload.stepBox.StepBox
-import kotlin.collections.forEachIndexed
+import com.csb.presentation.upload.stepBox.StepBoxList
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -102,11 +94,8 @@ fun UploadRecipeScreen(
     //colorE9E9E9
     val colorE9E9E9 = colorResource(id = R.color.colorE9E9E9)
 
-    val textValue1 = remember { mutableStateOf("") }
-    val textValue2 = remember { mutableStateOf("") }
-    val textValue3 = remember { mutableStateOf("") }
-    val textValue4 = remember { mutableStateOf("") }
-    val textValue5 = remember { mutableStateOf("") }
+    //colorD9D9D9
+    val colorD9D9D9 = colorResource(id = R.color.colorD9D9D9)
 
     // 갤러리에서 사진 가져오는 런처
     val pickImageLauncher = rememberLauncherForActivityResult(
@@ -184,6 +173,10 @@ fun UploadRecipeScreen(
         )
     }
 
+    //업로드시 화면나가기
+    if (viewModel.isUploadProcessingDone.value) {
+        rootScreenNavController.popBackStack()
+    }
 
     Scaffold(
         modifier = Modifier
@@ -203,7 +196,7 @@ fun UploadRecipeScreen(
                     rootScreenNavController.popBackStack()
                 },
                 menuItems = {
-                    if (!false) {
+                    if (false) {
                         Text(
                             text = stringResource(id = R.string.register),
                             modifier = Modifier,
@@ -219,9 +212,9 @@ fun UploadRecipeScreen(
                             text = stringResource(id = R.string.register),
                             modifier = Modifier
                                 .clickable {
-                                    //등록
+                                    viewModel.uploadProcessing()
                                 },
-                            color = colorResource(id = R.color.textColor262626),
+                            color = textColor262626,
                             fontFamily = pretendard
                         )
                         Spacer(
@@ -239,216 +232,14 @@ fun UploadRecipeScreen(
                 .verticalScroll(rememberScrollState())
         ) {
 
-            Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 10.dp),
-                text = stringResource(id = R.string.recipeInformation),
-                fontSize = 20.sp,
-                fontFamily = pretendard,
-                color = textColor262626,
-                textAlign = TextAlign.Center,
-                fontWeight = FontWeight.Bold
-            )
-            Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 10.dp, start = 10.dp),
-                text = stringResource(id = R.string.image),
-                fontSize = 14.sp,
-                fontFamily = pretendard,
-                color = textColor262626,
-                textAlign = TextAlign.Start
-            )
-            Spacer(modifier = Modifier.height(10.dp))
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(120.dp),
-                verticalAlignment = Alignment.Bottom
-            ) {
-                Spacer(modifier = Modifier.width(10.dp))
-                if (viewModel.mainImageUri.value != Uri.EMPTY) {
-                    PhotoItem(
-                        imageUri = viewModel.mainImageUri.value,
-                        deleteButton = {
-                            viewModel.setDeletePictureDialog(true)
-                        }
-                    )
-                } else {
-                    GetPhotoButton(
-                        onClick = {
-                            viewModel.setShowBottomSheetVisible(true)
-                        }
-                    )
-                }
+            // 업로드 프로그래스바
+            if (viewModel.isProgressBarShow.value) {
+                CustomProgressDialog(isShowing = true)
             }
-            Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 20.dp, start = 10.dp),
-                text = stringResource(id = R.string.title),
-                fontSize = 14.sp,
-                fontFamily = pretendard,
-                color = textColor262626,
-                textAlign = TextAlign.Start
-            )
-            SimpleOutlinedTextField(
-                textFieldValue = textValue1,
-                paddingTop = 10.dp,
-                paddingStart = 10.dp,
-                paddingEnd = 10.dp,
-                placeHolder = stringResource(id = R.string.recipeTitle)
-            )
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 20.dp, start = 10.dp, end = 10.dp)
-                    .wrapContentHeight()
-            ) {
-                Column(
-                    modifier = Modifier
-                        .weight(1f)
-                ) {
-                    Text(
-                        text = stringResource(id = R.string.quantity),
-                        fontFamily = pretendard,
-                        fontSize = 14.sp,
-                        color = textColor262626
-                    )
-                    SimpleOutlinedTextField(
-                        singleLine = true,
-                        textFieldValue = textValue2,
-                        paddingTop = 10.dp,
-                        paddingEnd = 10.dp,
-                        placeHolder = stringResource(id = R.string.howManyServing)
-                    )
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Start
-                    ) {
-                        var chk = remember { mutableStateOf(false) }
-                        Checkbox(
-                            checked = chk.value,
-                            onCheckedChange = { chk.value = it },
-                            colors = CheckboxDefaults.colors(
-                                uncheckedColor = colorResource(id = R.color.colorD9D9D9),
-                            ),
-                            modifier = Modifier
-                                .padding(start = 0.dp)
-                        )
-                        Text(
-                            text = stringResource(id = R.string.notSure),
-                            fontFamily = pretendard,
-                            fontSize = 14.sp,
-                            color = textColor262626
-                        )
-                    }
 
-                }
-                Column(
-                    modifier = Modifier
-                        .weight(1f)
-                ) {
-                    Text(
-                        text = stringResource(id = R.string.cost),
-                        fontFamily = pretendard,
-                        fontSize = 14.sp,
-                        color = textColor262626
-                    )
-                    SimpleOutlinedTextField(
-                        singleLine = true,
-                        textFieldValue = textValue3,
-                        paddingTop = 10.dp,
-                        paddingEnd = 5.dp,
-                        placeHolder = stringResource(id = R.string.materialPurchaseCost)
-                    )
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Start
-                    ) {
-                        var chk = remember { mutableStateOf(false) }
-                        Checkbox(
-                            checked = chk.value,
-                            onCheckedChange = { chk.value = it },
-                            colors = CheckboxDefaults.colors(
-                                uncheckedColor = colorResource(id = R.color.colorD9D9D9),
-                            ),
-                            modifier = Modifier
-                                .padding(start = 0.dp)
-                        )
-                        Text(
-                            text = stringResource(id = R.string.notSure),
-                            fontFamily = pretendard,
-                            fontSize = 14.sp,
-                            color = textColor262626
-                        )
-                    }
+            UploadRecipeHeader(viewModel)
 
-                }
-                Column(
-                    modifier = Modifier
-                        .weight(1f)
-                ) {
-                    Text(
-                        text = stringResource(id = R.string.timeMinute),
-                        fontFamily = pretendard,
-                        fontSize = 14.sp,
-                        color = textColor262626
-                    )
-                    SimpleOutlinedTextField(
-                        singleLine = true,
-                        textFieldValue = textValue4,
-                        paddingTop = 10.dp,
-                        placeHolder = stringResource(id = R.string.totalCookingTime)
-                    )
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Start
-                    ) {
-                        var chk = remember { mutableStateOf(false) }
-                        Checkbox(
-                            checked = chk.value,
-                            onCheckedChange = { chk.value = it },
-                            colors = CheckboxDefaults.colors(
-                                uncheckedColor = colorResource(id = R.color.colorD9D9D9),
-                            ),
-                            modifier = Modifier
-                                .padding(start = 0.dp)
-                        )
-                        Text(
-                            text = stringResource(id = R.string.notSure),
-                            fontFamily = pretendard,
-                            fontSize = 14.sp,
-                            color = textColor262626
-                        )
-                    }
-                }
-            }
-            Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 20.dp, start = 10.dp),
-                text = stringResource(id = R.string.memo),
-                fontSize = 14.sp,
-                fontFamily = pretendard,
-                color = textColor262626,
-                textAlign = TextAlign.Start
-            )
-            SimpleOutlinedTextField(
-                textFieldValue = textValue5,
-                paddingTop = 10.dp,
-                paddingStart = 10.dp,
-                paddingEnd = 10.dp,
-                placeHolder = stringResource(id = R.string.memoLabel),
-            )
-            Spacer(modifier = Modifier.height(20.dp))
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(10.dp)
-                    .background(color = colorE9E9E9)
-            )
+
             Text(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -492,10 +283,10 @@ fun UploadRecipeScreen(
                 }
                 Text(
                     text = "3${stringResource(id = R.string.serving)}",
-                    color = colorResource(id = R.color.textColor262626),
+                    color = textColor262626,
                     textAlign = TextAlign.Center,
                     fontSize = 14.sp,
-                    fontFamily = FontFamily(Font(R.font.pretendardvariable)),
+                    fontFamily = pretendard,
                 )
                 IconButton(
                     onClick = {
@@ -524,44 +315,11 @@ fun UploadRecipeScreen(
                     .background(color = colorE9E9E9)
             )
 
-
-            viewModel.stepList.forEachIndexed { stepIndex, step ->
-                StepBox(
-                    stepState = step,
-                    addProcedure = { viewModel.addProcedure(stepIndex) },
-                    onImageButtonClick = { /* 이미지 버튼 클릭 처리 */ }
-                )
-            }
-
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight()
-                    .background(color = colorE9E9E9)
-                    .padding(top = 5.dp, bottom = 5.dp)
-            ) {
-                Box(
-                    modifier = Modifier
-                        .wrapContentSize()
-                        .align(Alignment.Center)
-                        .padding(horizontal = 10.dp),
-                ) {
-                    CustomBoxOutlineButton(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .background(MaterialTheme.colorScheme.background),
-                        text = stringResource(id = R.string.addStep),
-                        icon = painterResource(id = R.drawable.add_circle_24px),
-                        onClick = { viewModel.addStep() },
-                        buttonColor = Color.Transparent,
-                        borderColor = color7B7B7B,
-                        textColor = textColor262626,
-                    )
-                }
-            }
+            StepBoxList(viewModel)
         }
     }
 }
+
 
 @Preview(
     showBackground = true,

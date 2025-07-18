@@ -65,4 +65,7 @@
     <string name="source">소스</string>
     <string name="detailedSteps">스텝 이름</string>
     <string name="stepName">스텝 이름</string>
+    <string name="cancelLogin">로그인 취소</string>
+    <string name="pressOneMoreTimeToExit">한 번 더 누르면 종료됩니다.</string>
+    <string name="loadFailed">로딩 실패</string>
 </resources>

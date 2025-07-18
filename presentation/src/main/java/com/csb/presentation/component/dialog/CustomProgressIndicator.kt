@@ -5,8 +5,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.ProgressIndicatorDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -32,7 +33,7 @@ fun CustomProgressIndicator(
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 CircularProgressIndicator(
-                    modifier = Modifier.size(40.dp),
+                    modifier = Modifier.size(60.dp),
                     color = colorResource(id = R.color.textColor262626),
                     strokeWidth = 3.dp
                 )
@@ -44,10 +45,11 @@ fun CustomProgressIndicator(
                         color = colorResource(id = R.color.textColor262626)
                     )
                     LinearProgressIndicator(
-                        progress = uploadProgress / 100f,
+                        progress = { uploadProgress / 100f },
+                        modifier = Modifier.fillMaxWidth(),
                         color = colorResource(id = R.color.textColor262626),
-                        backgroundColor = Color.LightGray,
-                        modifier = Modifier.fillMaxWidth()
+                        trackColor = Color.LightGray,
+                        strokeCap = ProgressIndicatorDefaults.LinearStrokeCap,
                     )
                 }
             }

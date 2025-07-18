@@ -8,11 +8,19 @@ plugins {
     kotlin("kapt")
     id("kotlin-parcelize")
     id("com.google.dagger.hilt.android")
+    alias(libs.plugins.google.services)
 }
 
 android {
     namespace = "com.tsrecipe.tsrecipe"
     compileSdk = 35
+
+    val localProps = Properties().apply {
+        val propsFile = rootProject.file("local.properties")
+        if (propsFile.exists()) {
+            propsFile.inputStream().use { load(it) }
+        }
+    }
 
     defaultConfig {
         applicationId = "com.tsrecipe.tsrecipe"
@@ -22,13 +30,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
 
-    val localProps = Properties().apply {
-        val propsFile = rootProject.file("local.properties")
-        if (propsFile.exists()) {
-            propsFile.inputStream().use { load(it) }
-        }
+
+        buildConfigField("String","GOOGLE_CLIENT_ID",localProps["GOOGLE_CLIENT_ID"]as String)
     }
 
     signingConfigs {
@@ -49,6 +53,7 @@ android {
                 "proguard-rules.pro"
             )
         }
+
     }
 
 
@@ -102,6 +107,11 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    //구글 서비스
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation(libs.play.services.auth)
 }
 
 

@@ -1,8 +1,6 @@
-package com.csb.presentation.home
+package com.csb.presentation.recipe
 
-import android.widget.Scroller
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
@@ -24,16 +22,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.csb.presentation.R
 import com.csb.presentation.component.SubComposeAsyncImage
+import com.csb.presentation.component.colorBox.ColorBox
+import com.csb.presentation.component.spacer.Spacer_Height10DP
 
 @Composable
 fun RecipeHeader(
     imageUrl: String?,
-    title: String,
-    serving: String,
-    price: String,
-    time: String,
-    memo:String,
-    rememberScrollState:ScrollState
+    title: String?,
+    serving: String?,
+    price: String?,
+    time: String?,
+    name: String?,
+    memo:String?,
 ) {
     Box(
         modifier = Modifier
@@ -62,55 +62,45 @@ fun RecipeHeader(
         modifier = Modifier
             .fillMaxWidth(),
         //text = viewModel.title,
-        text = "연근 조림",
+        text = title ?: stringResource(id = R.string.loadFailed),
         color = colorResource(id = R.color.textColor262626),
         textAlign = TextAlign.Center,
         fontSize = 16.sp,
         fontFamily = FontFamily(Font(R.font.pretendardvariable)),
     )
-    Spacer(modifier = Modifier.height(10.dp))
+    Spacer_Height10DP()
     Text(
         modifier = Modifier
             .fillMaxWidth(),
-        //text = "${viewModel.serving}${stringResource(id = R.string.serving)} · ${viewModel.price}${stringResource(id = R.string.price)} · ${{viewModel.time}${stringResource(id = R.string.minute)}",
-        text = "${3}${stringResource(id = R.string.serving)} · ${"4,000"}${
-            stringResource(
-                id = R.string.price
-            )
-        } · ${"15"}${stringResource(id = R.string.minute)}",
+        text = "${serving ?: stringResource(id = R.string.loadFailed)}${stringResource(id = R.string.serving)} · ${price ?: stringResource(id = R.string.loadFailed)}${stringResource(id = R.string.price)
+        } · ${time ?: stringResource(id = R.string.loadFailed)}${stringResource(id = R.string.minute)}",
         color = colorResource(id = R.color.textColor8c8c8c),
         textAlign = TextAlign.Center,
         fontSize = 14.sp,
         fontFamily = FontFamily(Font(R.font.pretendardvariable)),
     )
-
-    Spacer(modifier = Modifier.height(10.dp))
+    Spacer_Height10DP()
     Text(
         modifier = Modifier
             .fillMaxWidth(),
         //text = viewModel.name,
-        text = "홍길동",
+        text =  name ?: stringResource(id = R.string.loadFailed),
         color = colorResource(id = R.color.textColor8c8c8c),
         textAlign = TextAlign.Center,
         fontSize = 14.sp,
         fontFamily = FontFamily(Font(R.font.pretendardvariable)),
     )
-    Spacer(modifier = Modifier.height(10.dp))
+    Spacer_Height10DP()
     Text(
         modifier = Modifier
             .fillMaxWidth(),
-        text = "기타 메모는 여기에.\n참고한 레시피 원본 출처 내용 적으면 됨",
+        text = memo ?: stringResource(id = R.string.loadFailed),
         color = colorResource(id = R.color.textColor8c8c8c),
         textAlign = TextAlign.Center,
         fontSize = 14.sp,
         fontFamily = FontFamily(Font(R.font.pretendardvariable)),
     )
-    Spacer(modifier = Modifier.height(10.dp))
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(10.dp)
-            .background(color = colorResource(id = R.color.colorE9E9E9))
-    )
+    Spacer_Height10DP()
+    ColorBox()
 
 }

@@ -1,5 +1,5 @@
 [versions]
-agp = "8.10.1"
+agp = "8.11.1"
 kotlin = "2.0.21"
 coreKtx = "1.16.0"
 foundation = "1.8.3"
@@ -25,6 +25,7 @@ constraintlayout = "2.2.1"
 compose-reorderable = "0.9.6"
 jetbrainsKotlinJvm = "2.0.21"
 foundationAndroid = "1.8.3"
+play-services-auth = "21.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -57,13 +58,14 @@ androidx-activity = { group = "androidx.activity", name = "activity", version.re
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 compose-reorderable = { group = "org.burnoutcrew.composereorderable", name = "reorderable", version.ref = "compose-reorderable" }
 androidx-foundation-android = { group = "androidx.compose.foundation", name = "foundation-android", version.ref = "foundationAndroid" }
-
-
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
-
 androidx-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "foundation" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version = "33.16.0" }
+firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
+play-services-auth = { group = "com.google.android.gms", name = "play-services-auth", version.ref = "play-services-auth" }
 
 [plugins]
+google-services = { id = "com.google.gms.google-services", version = "4.4.3" }
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }

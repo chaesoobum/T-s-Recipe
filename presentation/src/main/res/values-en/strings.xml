@@ -65,4 +65,7 @@
     <string name="source">source</string>
     <string name="detailedSteps">Detailed Steps</string>
     <string name="stepName">Step Name</string>
+    <string name="cancelLogin">Cancel Login</string>
+    <string name="pressOneMoreTimeToExit">Press one more time to exit.</string>
+    <string name="loadFailed">Load failed</string>
 </resources>

@@ -1,9 +1,8 @@
-package com.csb.presentation.home
+package com.csb.presentation.recipe
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -21,25 +20,31 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.csb.domain.model.Ingredient
 import com.csb.presentation.R
 import com.csb.presentation.component.IngredientItem
+import com.csb.presentation.component.spacer.Spacer_Height10DP
+import com.csb.presentation.component.spacer.Spacer_Height20DP
 
 @Composable
-fun RecipeIngredient(){
+fun RecipeIngredient(
+    isSource: Boolean = false,
+    processedIngredient: List<Ingredient?>
+){
+    //재료/소스 분기
+    val text = if (isSource) stringResource(id = R.string.basicIngredients)else stringResource(id = R.string.source)
     Text(
         modifier = Modifier
             .fillMaxWidth()
             .padding(start = 10.dp),
-        text = stringResource(id = R.string.basicIngredients),
+        text = text,
         fontSize = 16.sp,
         fontFamily = FontFamily(Font(R.font.pretendard)),
         color = colorResource(R.color.textColor262626),
         textAlign = TextAlign.Start,
         fontWeight = FontWeight.Bold
     )
-    Spacer(
-        modifier = Modifier.height(10.dp)
-    )
+    Spacer_Height10DP()
     HorizontalDivider(
         modifier = Modifier
             .padding(horizontal = 10.dp)
@@ -52,25 +57,21 @@ fun RecipeIngredient(){
             .padding(start = 10.dp, end = 10.dp)
             .wrapContentHeight()
     ) {
-        val dummyItems = listOf("재료 1", "재료 2", "재료 3")
-
         Column {
-            dummyItems.forEachIndexed { index, item ->
+            processedIngredient.forEachIndexed { index, it->
                 if ((index + 1) % 2 == 1) {
                     IngredientItem(
-                        ingredientName = "브로콜리",
-                        ingredientUnitList = listOf("2", "100g", "90oz"),
+                        ingredient = it,
                         backGroundColor = MaterialTheme.colorScheme.background
                     )
                 } else {
                     IngredientItem(
-                        ingredientName = "브로콜리",
-                        ingredientUnitList = listOf("2", "100g", "90oz"),
+                        ingredient = it,
                         backGroundColor = colorResource(id = R.color.colorF5F5F5)
                     )
                 }
             }
         }
     }
-    Spacer(modifier = Modifier.height(20.dp))
+    Spacer_Height20DP()
 }

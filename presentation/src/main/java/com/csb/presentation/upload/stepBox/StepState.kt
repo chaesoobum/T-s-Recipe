@@ -1,4 +1,4 @@
-package com.csb.presentation.upload.state
+package com.csb.presentation.upload.stepBox
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateListOf

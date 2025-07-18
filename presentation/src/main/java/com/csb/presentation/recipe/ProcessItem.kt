@@ -16,11 +16,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.csb.domain.model.Procedure
 import com.csb.presentation.R
 
 @Composable
 fun ProcessItem(
-    text: String
+    procedure: Procedure
 ) {
     Column(
         modifier = Modifier
@@ -36,7 +37,7 @@ fun ProcessItem(
             Text(
                 modifier = Modifier
                     .fillMaxWidth(),
-                text = text,
+                text = procedure.procedureContent,
                 color = colorResource(id = R.color.textColor262626),
                 fontFamily = FontFamily(Font(R.font.pretendardvariable)),
                 textAlign = TextAlign.Center,
@@ -54,5 +55,5 @@ fun ProcessItem(
 @Composable
 @Preview(showBackground = true)
 fun PreviewProcessItem() {
-    ProcessItem("냄비에 물, 찜기넣고 끓이기")
+    ProcessItem(Procedure())
 }

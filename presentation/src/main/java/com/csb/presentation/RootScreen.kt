@@ -2,10 +2,7 @@ package com.csb.presentation
 
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.Composable
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -15,7 +12,6 @@ import com.csb.presentation.start.LoginScreen
 import com.csb.presentation.start.SignUpScreen
 import com.csb.presentation.start.StartScreen
 import com.csb.presentation.upload.UploadRecipeScreen
-import com.csb.presentation.upload.UploadRecipeViewModel
 import com.csb.presentation.util.RootScreen
 
 //기본 뿌리 스크린
@@ -30,25 +26,25 @@ fun RootScreen() {
         enterTransition = {
             slideIntoContainer(
                 AnimatedContentTransitionScope.SlideDirection.Start,
-                animationSpec = tween(250)
+                animationSpec = tween(150)
             )
         },
         exitTransition = {
             slideOutOfContainer(
                 AnimatedContentTransitionScope.SlideDirection.Start,
-                animationSpec = tween(250)
+                animationSpec = tween(150)
             )
         },
         popExitTransition = {
             slideOutOfContainer(
                 AnimatedContentTransitionScope.SlideDirection.End,
-                animationSpec = tween(250)
+                animationSpec = tween(150)
             )
         },
         popEnterTransition = {
             slideIntoContainer(
                 AnimatedContentTransitionScope.SlideDirection.End,
-                animationSpec = tween(250)
+                animationSpec = tween(150)
             )
         }
     ) {

@@ -17,42 +17,39 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.csb.domain.model.Step
 import com.csb.presentation.R
 
 //(과정 리스트와 스템이름을 파라미터로 받아야함)
 @Composable
 fun StepItem(
-    stepTitle:String
+    step: Step?
 ) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(10.dp)
-                .background(color = colorResource(id = R.color.colorE9E9E9))
-        )
-        Text(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 10.dp,),
-            color = colorResource(id = R.color.textColor262626),
-            fontSize = 16.sp,
-            text = stepTitle,
-            fontFamily = FontFamily(Font(R.font.pretendard)),
-            textAlign = TextAlign.Center
-        )
-        val list = listOf("과정1","과정2","과정3")
+        step?.let {
+            Text(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 10.dp,),
+                color = colorResource(id = R.color.textColor262626),
+                fontSize = 16.sp,
+                text = it.stepName,
+                fontFamily = FontFamily(Font(R.font.pretendard)),
+                textAlign = TextAlign.Center
+            )
+        }
+
         Column(
             modifier = Modifier
                 .wrapContentHeight()
                 .padding(start = 10.dp, end = 10.dp)
         ){
-            list.forEachIndexed { index,item->
-                ProcessItem(item)
+            step?.procedureList?.forEach { it->
+                ProcessItem(it)
             }
         }
 
@@ -65,5 +62,5 @@ fun StepItem(
 @Preview(showBackground = true)
 @Composable
 fun PreviewStepItem(){
-    StepItem("조리")
+    StepItem(Step())
 }

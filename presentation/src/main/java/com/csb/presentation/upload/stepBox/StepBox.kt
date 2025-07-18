@@ -2,20 +2,22 @@ package com.csb.presentation.upload.stepBox
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,14 +35,30 @@ import androidx.compose.ui.unit.sp
 import com.csb.presentation.R
 import com.csb.presentation.component.CustomBoxOutlineButton
 import com.csb.presentation.component.SimpleOutlinedTextField
-import com.csb.presentation.upload.state.StepState
+import com.csb.presentation.upload.dragContainer
+import com.csb.presentation.upload.draggableItems
+import com.csb.presentation.upload.rememberDragDropState
 
 @Composable
 fun StepBox(
     stepState: StepState,
     addProcedure: () -> Unit,
-    onImageButtonClick: () -> Unit
-) {
+    onImageButtonClick: () -> Unit,
+    onDeleteStep: () -> Unit,
+    onDeleteProcedure: (ProcedureInputBoxState) -> Unit,
+    moveProcedure: (Int,Int)->Unit,
+    ) {
+    val procedureList = stepState.procedureList
+    val listState = rememberLazyListState()
+
+    val dragDropState = rememberDragDropState(
+        lazyListState = listState,
+        draggableItemsNum = if (procedureList.size > 1) procedureList.size else 0,
+        onMove = { from, to ->
+            moveProcedure(from,to)
+        }
+    )
+
     Text(
         modifier = Modifier
             .fillMaxWidth()
@@ -73,16 +91,16 @@ fun StepBox(
         }
         Box(
             modifier = Modifier
-            .weight(1f),
+                .weight(1f),
             contentAlignment = Alignment.Center
-        ){
+        ) {
             Icon(
                 imageVector = ImageVector.vectorResource(id = R.drawable.ic_trash),
                 contentDescription = null,
                 tint = colorResource(id = R.color.textColor262626),
                 modifier = Modifier
                     .clickable {
-
+                        onDeleteStep()
                     }
             )
         }
@@ -92,18 +110,33 @@ fun StepBox(
     HorizontalDivider(
         modifier = Modifier
             .padding(horizontal = 10.dp)
-            .padding(bottom = 10.dp)
             .height(2.dp)
-            .background(color = colorResource(id = R.color.colorD9D9D9)))
+            .background(color = colorResource(id = R.color.colorD9D9D9))
+    )
 
-
-    Column(modifier = Modifier.fillMaxWidth()) {
-        stepState.procedureList.forEach { procedure ->
-            ProcedureInputBox(
-                data = procedure,
-                onImageButtonClick = onImageButtonClick
-            )
-        }
+    // 리스트 출력
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxWidth()
+            .heightIn(max = 9999.dp)
+            .dragContainer(dragDropState),
+        state = listState
+    ) {
+        draggableItems(
+            items = procedureList,
+            dragDropState = dragDropState,
+            content = { modifier, item ->
+                val itemHeightPx = remember { mutableFloatStateOf(0f) }
+                ProcedureInputBox(
+                    modifier = modifier,
+                    data = item,
+                    itemHeightPx = itemHeightPx,
+                    onImageButtonClick = onImageButtonClick,
+                    onDeleteProcedure = { onDeleteProcedure(item) }
+                )
+            },
+            keySelector = { it.id }
+        )
     }
 
     CustomBoxOutlineButton(

@@ -1,4 +1,4 @@
-package com.csb.presentation.upload
+package com.csb.presentation.upload.ingredientBox
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Spacer
@@ -12,10 +12,10 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -27,22 +27,24 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.csb.presentation.R
 import com.csb.presentation.component.CustomBoxOutlineButton
+import com.csb.presentation.upload.UploadRecipeViewModel
+import com.csb.presentation.upload.dragContainer
 import com.csb.presentation.upload.draggableItems
-import com.csb.presentation.upload.ingredientBox.IngredientInputBoxState
-import com.csb.presentation.upload.ingredientBox.IngredientInputTable
+import com.csb.presentation.upload.rememberDragDropState
+
 
 @Composable
-fun IngredientsList(
+fun SourcesList(
     viewModel: UploadRecipeViewModel
 ) {
-    val ingredientList = viewModel.ingredientTable
+    val ingredientList = viewModel.sourceTable
     val listState = rememberLazyListState()
 
     val dragDropState = rememberDragDropState(
         lazyListState = listState,
         draggableItemsNum = if (ingredientList.size > 1) ingredientList.size else 0,
         onMove = { from, to ->
-            viewModel.moveIngredient(from, to)
+            viewModel.moveSource(from, to)
         }
     )
 
@@ -50,7 +52,7 @@ fun IngredientsList(
         modifier = Modifier
             .fillMaxWidth()
             .padding(start = 10.dp),
-        text = stringResource(id = R.string.basicIngredients),
+        text = stringResource(id = R.string.source),
         fontSize = 16.sp,
         fontFamily = FontFamily(Font(R.font.pretendard)),
         color = colorResource(id = R.color.textColor262626),
@@ -78,13 +80,13 @@ fun IngredientsList(
             items = ingredientList,
             dragDropState = dragDropState,
             content = { modifier, item ->
-                val itemHeightPx = remember { mutableStateOf(0f) }
+                val itemHeightPx = remember { mutableFloatStateOf(0f) }
                 IngredientInputTable(
                     data = item,
                     itemHeightPx = itemHeightPx,
                     modifier = modifier,
                     onDelete = {
-                        viewModel.removeIngredient(item)
+                        viewModel.removeSource(item)
                     }
                 )
             },
@@ -98,7 +100,7 @@ fun IngredientsList(
         text = stringResource(id = R.string.addIngredient),
         icon = painterResource(id = R.drawable.add_circle_24px),
         onClick = {
-            viewModel.addIngredientBox()
+            viewModel.addSourceBox()
         },
         buttonColor = colorResource(id = R.color.textColor262626),
         borderColor = colorResource(id = R.color.textColor262626),

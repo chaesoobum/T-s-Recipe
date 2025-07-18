@@ -1,8 +1,10 @@
 package com.csb.data
 
+import com.csb.data.repositories.GoogleLoginRepositoryImpl
 import com.csb.data.repositories.HomeRepositoryImpl
 import com.csb.data.repositories.RecipeRepositoryImpl
 import com.csb.data.repositories.UploadRecipeRepositoryImpl
+import com.csb.domain.repositories.GoogleLoginRepository
 import com.csb.domain.repositories.HomeRepository
 import com.csb.domain.repositories.RecipeRepository
 import com.csb.domain.repositories.UploadRecipeRepository
@@ -37,4 +39,11 @@ abstract class RepositoryModule {
     abstract fun bindUploadRecipeRepository(
         impl: UploadRecipeRepositoryImpl
     ): UploadRecipeRepository
+
+    //GoogleLoginRepository 바인딩
+    @Binds
+    @Singleton
+    abstract fun bindGoogleLoginRepository(
+        impl: GoogleLoginRepositoryImpl
+    ): GoogleLoginRepository
 }

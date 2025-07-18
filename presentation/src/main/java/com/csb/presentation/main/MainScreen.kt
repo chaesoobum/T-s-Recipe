@@ -22,6 +22,7 @@ import com.csb.presentation.mypage.MyPageScreen
 import com.csb.presentation.mypage.MyPageViewModel
 import com.csb.presentation.search.SearchScreen
 import com.csb.presentation.search.SearchViewModel
+import com.csb.presentation.upload.UploadRecipeScreen
 import com.csb.presentation.util.MainScreen
 
 

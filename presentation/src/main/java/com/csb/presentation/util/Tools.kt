@@ -1,14 +1,22 @@
 package com.csb.presentation.util
 
 import android.app.Activity
+import android.widget.Toast
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -49,7 +57,7 @@ object Tools {
         )
     }
     @Composable
-    fun SetLightStatusBarEffect() {
+    fun setLightStatusBarEffect() {
         val view = LocalView.current
         if (!view.isInEditMode) {
             val activity = view.context as Activity
@@ -108,7 +116,26 @@ object Tools {
             )
         )
     }
+    @Composable
+    fun exitApp(){
+        var backPressedTime by remember { mutableStateOf(0L) }
+        val context = LocalContext.current as ComponentActivity
+        val exitText = stringResource(id = R.string.pressOneMoreTimeToExit)
+        BackHandler {
+            val currentTime = System.currentTimeMillis()
+            if (currentTime - backPressedTime <= 2000) {
+                context.finish()
+            } else {
+                backPressedTime = currentTime
+                Toast.makeText(context, exitText, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
 
+    @Composable
+    fun getColor(){
+
+    }
 
 
 

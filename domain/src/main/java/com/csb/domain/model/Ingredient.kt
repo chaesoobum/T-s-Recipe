@@ -1,13 +1,12 @@
 package com.csb.domain.model
 
-import java.util.UUID
-
 data class Ingredient(
-    val ingredientName:String = "",
-    val ingredientTbsp:String = "",
-    val ingredientQty:String = "",
-    val ingredientCup:String = "",
-    val ingredient_g:String = "",
-    val ingredient_ml:String = "",
-    val ingredient_oz:String = "",
+    val ingredientName: String = "",
+    val ingredientTbsp: Double = 0.0,
+    val ingredientTsp: Double = 0.0,
+    val ingredientQty: Double = 0.0,
+    val ingredientCup: Double = 0.0,
+    val ingredient_g: Double = 0.0,
+    val ingredient_ml: Double = 0.0,
+    val ingredient_oz: Double = 0.0,
 )
