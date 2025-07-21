@@ -12,10 +12,13 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.LayoutCoordinates
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -27,8 +30,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.csb.presentation.R
 import com.csb.presentation.component.CustomBoxOutlineButton
+import com.csb.presentation.component.spacer.Spacer_Height10DP
 import com.csb.presentation.upload.UploadRecipeViewModel
-import com.csb.presentation.upload.dragContainer
+import com.csb.presentation.upload.dragContainerWithCustomDelay
 import com.csb.presentation.upload.draggableItems
 import com.csb.presentation.upload.rememberDragDropState
 
@@ -36,8 +40,12 @@ import com.csb.presentation.upload.rememberDragDropState
 fun IngredientsList(
     viewModel: UploadRecipeViewModel
 ) {
-    val ingredientList = viewModel.ingredientTable
+    val ingredientList = viewModel.formState.value.ingredientList
     val listState = rememberLazyListState()
+
+    val handleCoordinatesMap = remember {
+        mutableStateMapOf<String, MutableState<LayoutCoordinates?>>()
+    }
 
     val dragDropState = rememberDragDropState(
         lazyListState = listState,
@@ -46,6 +54,8 @@ fun IngredientsList(
             viewModel.moveIngredient(from, to)
         }
     )
+
+    Spacer_Height10DP()
 
     Text(
         modifier = Modifier
@@ -72,24 +82,22 @@ fun IngredientsList(
         modifier = Modifier
             .fillMaxWidth()
             .heightIn(max = 9999.dp)
-            .dragContainer(dragDropState),
+            .dragContainerWithCustomDelay(dragDropState,200L),
         state = listState
     ) {
         draggableItems(
             items = ingredientList,
             dragDropState = dragDropState,
+            keySelector = { it.id },
             content = { modifier, item ->
                 val itemHeightPx = remember { mutableFloatStateOf(0f) }
                 IngredientInputTable(
                     data = item,
                     itemHeightPx = itemHeightPx,
                     modifier = modifier,
-                    onDelete = {
-                        viewModel.removeIngredient(item)
-                    }
+                    onDelete = { viewModel.removeIngredient(item) },
                 )
-            },
-            keySelector = { it.id }
+            }
         )
     }
     CustomBoxOutlineButton(

@@ -1,8 +1,8 @@
-package com.csb.presentation.upload.stepBox
+package com.csb.presentation.upload.state
 
 import android.net.Uri
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import java.util.UUID
 
 data class ProcedureInputBoxState(

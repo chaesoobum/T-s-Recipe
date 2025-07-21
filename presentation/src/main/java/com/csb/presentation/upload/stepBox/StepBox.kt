@@ -16,12 +16,17 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableStateMapOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.LayoutCoordinates
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -35,9 +40,11 @@ import androidx.compose.ui.unit.sp
 import com.csb.presentation.R
 import com.csb.presentation.component.CustomBoxOutlineButton
 import com.csb.presentation.component.SimpleOutlinedTextField
-import com.csb.presentation.upload.dragContainer
+import com.csb.presentation.component.spacer.Spacer_Height10DP
+import com.csb.presentation.upload.dragContainerWithCustomDelay
 import com.csb.presentation.upload.draggableItems
 import com.csb.presentation.upload.rememberDragDropState
+import com.csb.presentation.upload.state.ProcedureInputBoxState
 
 @Composable
 fun StepBox(
@@ -50,6 +57,10 @@ fun StepBox(
     ) {
     val procedureList = stepState.procedureList
     val listState = rememberLazyListState()
+
+    val handleCoordinatesMap = remember {
+        mutableStateMapOf<String, MutableState<LayoutCoordinates?>>()
+    }
 
     val dragDropState = rememberDragDropState(
         lazyListState = listState,
@@ -114,30 +125,32 @@ fun StepBox(
             .background(color = colorResource(id = R.color.colorD9D9D9))
     )
 
+
     // 리스트 출력
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
             .heightIn(max = 9999.dp)
-            .dragContainer(dragDropState),
+            .dragContainerWithCustomDelay(dragDropState,200L),
         state = listState
     ) {
         draggableItems(
             items = procedureList,
             dragDropState = dragDropState,
+            keySelector = { it.id },
             content = { modifier, item ->
                 val itemHeightPx = remember { mutableFloatStateOf(0f) }
                 ProcedureInputBox(
-                    modifier = modifier,
                     data = item,
                     itemHeightPx = itemHeightPx,
+                    modifier = modifier,
+                    onDeleteProcedure = { onDeleteProcedure(item) },
                     onImageButtonClick = onImageButtonClick,
-                    onDeleteProcedure = { onDeleteProcedure(item) }
                 )
             },
-            keySelector = { it.id }
         )
     }
+    Spacer_Height10DP()
 
     CustomBoxOutlineButton(
         modifier = Modifier
@@ -151,7 +164,7 @@ fun StepBox(
         textColor = colorResource(id = R.color.textColor262626),
     )
 
-    Spacer(modifier = Modifier.height(10.dp))
+    Spacer_Height10DP()
     Box(
         modifier = Modifier
             .fillMaxWidth()

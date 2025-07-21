@@ -10,7 +10,7 @@
     <string name="recipeInformation">Recipe Information</string>
     <string name="image">Image *</string>
     <string name="title">Title *</string>
-    <string name="recipeTitle">recipe title</string>
+    <string name="recipeTitle">recipe title(&lt;20)</string>
     <string name="quantity">quantity *</string>
     <string name="qty">Qty</string>
     <string name="howManyServing">Serving\u003F</string>
@@ -19,7 +19,7 @@
     <string name="timeMinute">time (minute)</string>
     <string name="totalCookingTime">totalCookingTime</string>
     <string name="memo">memo</string>
-    <string name="memoLabel">Reference recipe sources, etc.</string>
+    <string name="memoLabel">Reference recipe sources, etc.(&lt;100)</string>
     <string name="ingredientTip">* Please enter only one of the following units of measurement</string>
     <string name="ingredientNameStar">ingredient *</string>
     <string name="ingredientName">ingredient</string>

@@ -57,8 +57,10 @@ import com.csb.presentation.R
 import com.csb.presentation.component.CustomBoxOutlineButton
 import com.csb.presentation.component.TakePictureOptionBottomSheet
 import com.csb.presentation.component.TopAppBar
+import com.csb.presentation.component.colorBox.ColorBox
 import com.csb.presentation.component.dialog.CustomDialog
 import com.csb.presentation.component.dialog.CustomProgressDialog
+import com.csb.presentation.component.spacer.Spacer_Height10DP
 import com.csb.presentation.upload.headerBox.UploadRecipeHeader
 import com.csb.presentation.upload.ingredientBox.IngredientsList
 import com.csb.presentation.upload.ingredientBox.SourcesList
@@ -71,10 +73,7 @@ fun UploadRecipeScreen(
     rootScreenNavController: NavHostController,
     viewModel: UploadRecipeViewModel = hiltViewModel()
 ) {
-    val context = LocalContext.current
     val focusManager = LocalFocusManager.current
-    val listState = rememberLazyListState()
-    val coroutineScope = rememberCoroutineScope()
 
     //pretendardvariable
     val pretendard = FontFamily(Font(R.font.pretendard))
@@ -226,10 +225,11 @@ fun UploadRecipeScreen(
             )
         }
     ) { innerPadding ->
+        val scrollState = rememberScrollState()
         Column(
             modifier = Modifier
                 .padding(innerPadding)
-                .verticalScroll(rememberScrollState())
+                .verticalScroll(scrollState)
         ) {
 
             // 업로드 프로그래스바
@@ -240,80 +240,76 @@ fun UploadRecipeScreen(
             UploadRecipeHeader(viewModel)
 
 
-            Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 20.dp),
-                text = stringResource(id = R.string.ingredient),
-                fontSize = 16.sp,
-                fontFamily = pretendard,
-                color = textColor262626,
-                textAlign = TextAlign.Center,
-                fontWeight = FontWeight.Bold
-            )
-            Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 20.dp),
-                text = stringResource(id = R.string.ingredientTip),
-                fontSize = 16.sp,
-                fontFamily = pretendard,
-                color = textColor262626,
-                textAlign = TextAlign.Center,
-            )
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
-            ) {
-                IconButton(
-                    onClick = {
-
-                    },
-                    modifier = Modifier
-                        .padding(8.dp)
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_circle_minus),
-                        contentDescription = "n인분 줄이기",
-                        tint = Color.Unspecified
-                    )
-                }
-                Text(
-                    text = "3${stringResource(id = R.string.serving)}",
-                    color = textColor262626,
-                    textAlign = TextAlign.Center,
-                    fontSize = 14.sp,
-                    fontFamily = pretendard,
-                )
-                IconButton(
-                    onClick = {
-
-                    },
-                    modifier = Modifier
-                        .padding(8.dp)
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_circle_plus),
-                        contentDescription = "n인분 추가하기",
-                        tint = Color.Unspecified
-                    )
-                }
-            }
+//            Text(
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .padding(top = 20.dp),
+//                text = stringResource(id = R.string.ingredient),
+//                fontSize = 16.sp,
+//                fontFamily = pretendard,
+//                color = textColor262626,
+//                textAlign = TextAlign.Center,
+//                fontWeight = FontWeight.Bold
+//            )
+//            Text(
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .padding(top = 20.dp),
+//                text = stringResource(id = R.string.ingredientTip),
+//                fontSize = 16.sp,
+//                fontFamily = pretendard,
+//                color = textColor262626,
+//                textAlign = TextAlign.Center,
+//            )
+//
+//            Row(
+//                modifier = Modifier
+//                    .fillMaxWidth(),
+//                verticalAlignment = Alignment.CenterVertically,
+//                horizontalArrangement = Arrangement.Center
+//            ) {
+//                IconButton(
+//                    onClick = {
+//
+//                    },
+//                    modifier = Modifier
+//                        .padding(8.dp)
+//                ) {
+//                    Icon(
+//                        painter = painterResource(id = R.drawable.ic_circle_minus),
+//                        contentDescription = "n인분 줄이기",
+//                        tint = Color.Unspecified
+//                    )
+//                }
+//                Text(
+//                    text = "3${stringResource(id = R.string.serving)}",
+//                    color = textColor262626,
+//                    textAlign = TextAlign.Center,
+//                    fontSize = 14.sp,
+//                    fontFamily = pretendard,
+//                )
+//                IconButton(
+//                    onClick = {
+//
+//                    },
+//                    modifier = Modifier
+//                        .padding(8.dp)
+//                ) {
+//                    Icon(
+//                        painter = painterResource(id = R.drawable.ic_circle_plus),
+//                        contentDescription = "n인분 추가하기",
+//                        tint = Color.Unspecified
+//                    )
+//                }
+//            }
 
             IngredientsList(viewModel)
 
             SourcesList(viewModel)
 
-            Box(
-                modifier = Modifier
-                    .padding(top = 10.dp)
-                    .fillMaxWidth()
-                    .height(10.dp)
-                    .background(color = colorE9E9E9)
-            )
+            Spacer_Height10DP()
+
+            ColorBox()
 
             StepBoxList(viewModel)
         }

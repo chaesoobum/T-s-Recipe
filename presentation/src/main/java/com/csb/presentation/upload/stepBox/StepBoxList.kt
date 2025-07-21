@@ -45,7 +45,24 @@ fun StepBoxList(
 
     //colorD9D9D9
     val colorD9D9D9 = colorResource(id = R.color.colorD9D9D9)
-    viewModel.stepList.forEachIndexed { stepIndex, step ->
+//    viewModel.stepList.forEachIndexed { stepIndex, step ->
+//        StepBox(
+//            stepState = step,
+//            addProcedure = { viewModel.addProcedure(stepIndex) },
+//            onImageButtonClick = {
+//                /* 이미지 버튼 클릭 처리 */
+//            },
+//            onDeleteStep = {
+//                viewModel.removeStep(step)
+//            },
+//            onDeleteProcedure = { procedure ->
+//                viewModel.removeProcedure(step, procedure)
+//            },
+//            moveProcedure = { from, to -> viewModel.moveProcedure(step, from, to) }
+//        )
+//    }
+
+    viewModel.formState.value.stepList.forEachIndexed { stepIndex, step ->
         StepBox(
             stepState = step,
             addProcedure = { viewModel.addProcedure(stepIndex) },

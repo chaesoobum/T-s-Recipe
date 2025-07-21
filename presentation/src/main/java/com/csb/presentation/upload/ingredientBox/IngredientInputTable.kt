@@ -24,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.LayoutCoordinates
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.colorResource
@@ -31,7 +32,9 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.csb.presentation.R
+import com.csb.presentation.upload.DragDropState
 import com.csb.presentation.upload.rememberDragDropState
+import com.csb.presentation.upload.state.IngredientInputBoxState
 import com.csb.presentation.util.Tools.makeIngredientList
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -40,10 +43,11 @@ fun IngredientInputTable(
     data: IngredientInputBoxState,
     itemHeightPx: MutableState<Float>,
     modifier: Modifier = Modifier,
-    onDelete: () -> Unit
+    onDelete: () -> Unit,
 ) {
     val ingredientList = makeIngredientList(data)
     val focusManager = LocalFocusManager.current
+
 
     Column(
         modifier = modifier
@@ -65,7 +69,6 @@ fun IngredientInputTable(
                 imageVector = ImageVector.vectorResource(id = R.drawable.ic_draganddrop),
                 contentDescription = null,
                 tint = colorResource(id = R.color.textColor262626),
-                modifier = Modifier
             )
             Spacer(modifier = Modifier.width(20.dp))
             Icon(
@@ -110,9 +113,10 @@ fun PreviewIngredientInputTable() {
         draggableItemsNum = 1
     )
 
-    IngredientInputTable(
-        data = state,
-        itemHeightPx = dummyHeight,
-        onDelete = {}
-    )
+//    IngredientInputTable(
+//        data = state,
+//        itemHeightPx = dummyHeight,
+//        onDelete = {},
+//        onDragHandle = {Modifier}
+//    )
 }

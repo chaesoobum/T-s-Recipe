@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import com.csb.presentation.R
 import com.csb.presentation.upload.ingredientBox.IngredientField
-import com.csb.presentation.upload.ingredientBox.IngredientInputBoxState
+import com.csb.presentation.upload.state.IngredientInputBoxState
 import com.valentinilk.shimmer.Shimmer
 import com.valentinilk.shimmer.ShimmerBounds
 import com.valentinilk.shimmer.ShimmerTheme

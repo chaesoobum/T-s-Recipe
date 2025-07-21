@@ -1,4 +1,4 @@
-package com.csb.presentation.upload.ingredientBox
+package com.csb.presentation.upload.state
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf

@@ -10,7 +10,7 @@
     <string name="recipeInformation">레시피 기본정보</string>
     <string name="image">이미지 *</string>
     <string name="title">제목 *</string>
-    <string name="recipeTitle">레시피 제목</string>
+    <string name="recipeTitle">레시피 제목(&lt;20)</string>
     <string name="quantity">분량 *</string>
     <string name="qty">Qty</string>
     <string name="howManyServing">몇인분\u003F</string>
@@ -19,7 +19,7 @@
     <string name="timeMinute">시간 (분)</string>
     <string name="totalCookingTime">총 요리 시간</string>
     <string name="memo">기타 메모</string>
-    <string name="memoLabel">참고한 레시피 출처 등</string>
+    <string name="memoLabel">참고한 레시피 출처 등(&lt;100)</string>
     <string name="ingredientTip">* 계량 단위는 다음 중 한가지만 적어주시면 돼요</string>
     <string name="ingredientNameStar">재료 이름 *</string>
     <string name="ingredientName">재료 이름</string>

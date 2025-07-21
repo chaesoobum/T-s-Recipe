@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.input.InputTransformation.Companion.keyboardOptions
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Text
@@ -25,12 +27,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.csb.presentation.R
 import com.csb.presentation.component.GetPhotoButton
-import com.csb.presentation.component.SimpleOutlinedTextField2
+import com.csb.presentation.component.SimpleOutlinedTextField
 import com.csb.presentation.component.photo.PhotoItem
 import com.csb.presentation.upload.UploadRecipeViewModel
 
@@ -113,14 +116,14 @@ fun UploadRecipeHeader(
         color = textColor262626,
         textAlign = TextAlign.Start
     )
-    SimpleOutlinedTextField2(
-        value = viewModel.formState.value.title,
-        onValueChange = { viewModel.onTitleChanged(it) },
+    SimpleOutlinedTextField(
+        textFieldValue = viewModel.formState.value.title,
         placeHolder = stringResource(id = R.string.recipeTitle),
         paddingTop = 10.dp,
         paddingStart = 10.dp,
         paddingEnd = 10.dp,
-        singleLine = true
+        singleLine = true,
+        maxLength = 20
     )
     Row(
         modifier = Modifier
@@ -138,22 +141,23 @@ fun UploadRecipeHeader(
                 fontSize = 14.sp,
                 color = textColor262626
             )
-            SimpleOutlinedTextField2(
-                value = viewModel.formState.value.portion,
-                onValueChange = { viewModel.onPortionChanged(it) },
-                placeHolder =stringResource(id = R.string.howManyServing),
+            SimpleOutlinedTextField(
+                textFieldValue = viewModel.formState.value.portion,
+                placeHolder = stringResource(id = R.string.howManyServing),
                 paddingTop = 10.dp,
                 paddingEnd = 10.dp,
-                singleLine = true
+                singleLine = true,
+                enabled = !viewModel.portionEnable.value,
+                maxLength = 10,
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
             )
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Start
             ) {
-                var chk = remember { mutableStateOf(false) }
                 Checkbox(
-                    checked = chk.value,
-                    onCheckedChange = { chk.value = it },
+                    checked = viewModel.portionEnable.value,
+                    onCheckedChange = { viewModel.setPortionEnable(it) },
                     colors = CheckboxDefaults.colors(
                         uncheckedColor = colorD9D9D9,
                     ),
@@ -179,22 +183,22 @@ fun UploadRecipeHeader(
                 fontSize = 14.sp,
                 color = textColor262626
             )
-            SimpleOutlinedTextField2(
-                value = viewModel.formState.value.cost,
-                onValueChange = { viewModel.onCostChanged(it) },
-                placeHolder =stringResource(id = R.string.materialPurchaseCost),
+            SimpleOutlinedTextField(
+                textFieldValue = viewModel.formState.value.cost,
+                placeHolder = stringResource(id = R.string.materialPurchaseCost),
                 paddingTop = 10.dp,
                 paddingEnd = 5.dp,
-                singleLine = true
+                singleLine = true,
+                maxLength = 10,
+                enabled = !viewModel.priceEnable.value,
             )
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Start
             ) {
-                var chk = remember { mutableStateOf(false) }
                 Checkbox(
-                    checked = chk.value,
-                    onCheckedChange = { chk.value = it },
+                    checked = viewModel.priceEnable.value,
+                    onCheckedChange = { viewModel.setPriceEnable(it) },
                     colors = CheckboxDefaults.colors(
                         uncheckedColor = colorD9D9D9,
                     ),
@@ -220,21 +224,20 @@ fun UploadRecipeHeader(
                 fontSize = 14.sp,
                 color = textColor262626
             )
-            SimpleOutlinedTextField2(
-                value = viewModel.formState.value.time,
-                onValueChange = { viewModel.onTimeChanged(it) },
-                placeHolder =stringResource(id = R.string.totalCookingTime),
+            SimpleOutlinedTextField(
+                textFieldValue = viewModel.formState.value.time,
+                placeHolder = stringResource(id = R.string.totalCookingTime),
                 paddingTop = 10.dp,
-                singleLine = true
+                singleLine = true,
+                enabled = !viewModel.timeEnable.value
             )
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Start
             ) {
-                var chk = remember { mutableStateOf(false) }
                 Checkbox(
-                    checked = chk.value,
-                    onCheckedChange = { chk.value = it },
+                    checked = viewModel.timeEnable.value,
+                    onCheckedChange = { viewModel.setTimeEnable(it) },
                     colors = CheckboxDefaults.colors(
                         uncheckedColor = colorD9D9D9,
                     ),
@@ -260,10 +263,10 @@ fun UploadRecipeHeader(
         color = textColor262626,
         textAlign = TextAlign.Start
     )
-    SimpleOutlinedTextField2(
-        value = viewModel.formState.value.memo,
-        onValueChange = { viewModel.onMemoChanged(it) },
-        placeHolder =stringResource(id = R.string.memoLabel),
+    SimpleOutlinedTextField(
+        textFieldValue = viewModel.formState.value.memo,
+        placeHolder = stringResource(id = R.string.memoLabel),
+        singleLine = false,
         paddingTop = 10.dp,
         paddingStart = 10.dp,
         paddingEnd = 10.dp,
