@@ -24,18 +24,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.layout.LayoutCoordinates
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.csb.presentation.R
-import com.csb.presentation.upload.DragDropState
 import com.csb.presentation.upload.rememberDragDropState
 import com.csb.presentation.upload.state.IngredientInputBoxState
-import com.csb.presentation.util.Tools.makeIngredientList
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -45,7 +43,7 @@ fun IngredientInputTable(
     modifier: Modifier = Modifier,
     onDelete: () -> Unit,
 ) {
-    val ingredientList = makeIngredientList(data)
+    //val ingredientList = makeIngredientList(data)
     val focusManager = LocalFocusManager.current
 
 
@@ -82,12 +80,19 @@ fun IngredientInputTable(
                     }
             )
 
-            ingredientList.forEach { item ->
+            IngredientInputBox(
+                label = stringResource(id = R.string.ingredientName),
+                width = 160.dp,
+                value = data.ingredientName,
+                placeholder = stringResource(id = R.string.ingredientName)
+            )
+
+            data.ingredientUnitList.forEach { it->
                 IngredientInputBox(
-                    label = item.label,
-                    width = item.width,
-                    value = item.value,
-                    placeholder = item.placeholder
+                    label = it.key,
+                    width = 80.dp,
+                    value = it.value,
+                    placeholder = it.key
                 )
             }
         }
@@ -101,7 +106,7 @@ fun IngredientInputTable(
 
 @Preview(showBackground = true, widthDp = 1000)
 @Composable
-fun PreviewIngredientInputTable() {
+fun PreviewIngredientInputTable2() {
     val state = remember { IngredientInputBoxState() }
     val dummyHeight = remember { mutableStateOf(100f) } // 프리뷰용 기본 높이 설정
     val listState = rememberLazyListState()

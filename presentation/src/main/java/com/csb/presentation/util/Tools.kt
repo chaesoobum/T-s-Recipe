@@ -69,53 +69,53 @@ object Tools {
         }
     }
 
-    @Composable
-    fun makeIngredientList(data: IngredientInputBoxState): List<IngredientField> {
-        return listOf(
-            IngredientField(
-                label = stringResource(id = R.string.ingredientName),
-                width = 160.dp,
-                value = data.ingredientName,
-                placeholder = stringResource(id = R.string.ingredientName)
-            ),
-            IngredientField(
-                label = stringResource(id = R.string.Tbsp),
-                width = 80.dp,
-                value = data.ingredientTbsp,
-                placeholder = stringResource(id = R.string.Tbsp)
-            ),
-            IngredientField(
-                label = stringResource(id = R.string.qty),
-                width = 80.dp,
-                value = data.ingredientQty,
-                placeholder = stringResource(id = R.string.qty)
-            ),
-            IngredientField(
-                label = stringResource(id = R.string.cup),
-                width = 80.dp,
-                value = data.ingredientCup,
-                placeholder = stringResource(id = R.string.cup)
-            ),
-            IngredientField(
-                label = stringResource(id = R.string.g),
-                width = 80.dp,
-                value = data.ingredient_g,
-                placeholder = stringResource(id = R.string.g)
-            ),
-            IngredientField(
-                label = stringResource(id = R.string.ml),
-                width = 80.dp,
-                value = data.ingredient_ml,
-                placeholder = stringResource(id = R.string.ml)
-            ),
-            IngredientField(
-                label = stringResource(id = R.string.oz),
-                width = 80.dp,
-                value = data.ingredient_oz,
-                placeholder = stringResource(id = R.string.oz)
-            )
-        )
-    }
+//    @Composable
+//    fun makeIngredientList(data: IngredientInputBoxState): List<IngredientField> {
+//        return listOf(
+//            IngredientField(
+//                label = stringResource(id = R.string.ingredientName),
+//                width = 160.dp,
+//                value = data.ingredientName,
+//                placeholder = stringResource(id = R.string.ingredientName)
+//            ),
+//            IngredientField(
+//                label = stringResource(id = R.string.Tbsp),
+//                width = 80.dp,
+//                value = data.ingredientTbsp,
+//                placeholder = stringResource(id = R.string.Tbsp)
+//            ),
+//            IngredientField(
+//                label = stringResource(id = R.string.qty),
+//                width = 80.dp,
+//                value = data.ingredientQty,
+//                placeholder = stringResource(id = R.string.qty)
+//            ),
+//            IngredientField(
+//                label = stringResource(id = R.string.cup),
+//                width = 80.dp,
+//                value = data.ingredientCup,
+//                placeholder = stringResource(id = R.string.cup)
+//            ),
+//            IngredientField(
+//                label = stringResource(id = R.string.g),
+//                width = 80.dp,
+//                value = data.ingredient_g,
+//                placeholder = stringResource(id = R.string.g)
+//            ),
+//            IngredientField(
+//                label = stringResource(id = R.string.ml),
+//                width = 80.dp,
+//                value = data.ingredient_ml,
+//                placeholder = stringResource(id = R.string.ml)
+//            ),
+//            IngredientField(
+//                label = stringResource(id = R.string.oz),
+//                width = 80.dp,
+//                value = data.ingredient_oz,
+//                placeholder = stringResource(id = R.string.oz)
+//            )
+//        )
+//    }
     @Composable
     fun exitApp(){
         var backPressedTime by remember { mutableStateOf(0L) }
